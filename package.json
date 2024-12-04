@@ -1,0 +1,39 @@
+{
+  "name": "convex-use-next-prev-paginated-query",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "format": "biome format . --write",
+    "lint": "biome lint .",
+    "check": "biome check --write ."
+  },
+  "keywords": [],
+  "author": "RJ Dellecese",
+  "license": "ISC",
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.0",
+    "@biomejs/biome": "^1.9.4",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "@tsconfig/strictest": "^2.0.5",
+    "@types/react": "^18.3.12",
+    "convex": "^1.17.3",
+    "convex-helpers": "^0.1.65",
+    "jsdom": "^25.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.6"
+  },
+  "peerDependencies": {
+    "convex": "^1.17.3",
+    "react": "^18.3.1"
+  }
+}
