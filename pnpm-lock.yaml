@@ -30,8 +30,8 @@ importers:
         specifier: ^1.17.3
         version: 1.17.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       convex-helpers:
-        specifier: ^0.1.65
-        version: 0.1.65(convex@1.17.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        specifier: ^0.1.67
+        version: 0.1.67(convex@1.17.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       jsdom:
         specifier: ^25.0.1
         version: 25.0.1
@@ -735,13 +735,13 @@ packages:
     resolution: {integrity: sha512-I5qxpzLv+sJhTVEoLYNcTW+bThDCPsit0vLNKShZx6rLtpilNpmmeTPaeqJb9ZE9dV3DGaeby6Vuhrw38WjeyQ==}
     engines: {node: ^14.18.0 || >=16.10.0}
 
-  convex-helpers@0.1.65:
-    resolution: {integrity: sha512-KGNBozMliwB6hLNZb3mrJSuV68PNOXWNt4i77un8rnuANgfwa4FDZXVdDO3btbrCsjMIWbIQ9+5IMGUBChUnUg==}
+  convex-helpers@0.1.67:
+    resolution: {integrity: sha512-nnb0W2FYKbqJt00UH6raZ/J0A1+CbcFdqmFJTDvvSR1P4RhwBj1TBzS3/B1G1nMYebX3gguSwOWfO0s2rcB/wg==}
     hasBin: true
     peerDependencies:
       convex: ^1.13.0
       hono: ^4.0.5
-      react: ^17.0.2 || ^18.0.0
+      react: ^17.0.2 || ^18.0.0 || ^19.0.0
       zod: ^3.22.4
     peerDependenciesMeta:
       hono:
@@ -1975,7 +1975,7 @@ snapshots:
 
   consola@3.2.3: {}
 
-  convex-helpers@0.1.65(convex@1.17.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
+  convex-helpers@0.1.67(convex@1.17.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
     dependencies:
       convex: 1.17.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     optionalDependencies:
