@@ -20,6 +20,8 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.1",
     "@biomejs/biome": "^1.9.4",
+    "@changesets/cli": "^2.27.11",
+    "@changesets/config": "^3.0.5",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@tsconfig/strictest": "^2.0.5",
