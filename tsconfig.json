@@ -1,6 +1,9 @@
 {
 	"compilerOptions": {
-		"lib": ["ESNext", "DOM"]
+		"lib": ["ESNext", "DOM"],
+		"target": "ESNext",
+		"moduleResolution": "Bundler",
+		"module": "ESNext"
 	},
 	"extends": "@tsconfig/strictest/tsconfig.json"
 }
