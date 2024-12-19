@@ -11,6 +11,16 @@ import type {
 import { type Value, convexToJson } from "convex/values";
 import { type Dispatch, useEffect, useReducer } from "react";
 
+/**
+ * Load data reactively from a paginated query, one page at a time.
+ *
+ * Use `loadNext` and `loadPrev` to navigate through pages.
+ *
+ * @param query A reference to the public paginated query function.
+ * @param args The arguments object for the query function, excluding the `paginationOpts` property. That property is injected by this hook.
+ * @param options An object specifying the `initialNumItems` to be loaded in the first page.
+ * @returns The paginated query result, in the form of a discriminated union. Use the `_tag` property to determine the current state of the query.
+ */
 export const useNextPrevPaginatedQuery = <
 	Query extends PaginatedQueryReference,
 >(
@@ -36,7 +46,7 @@ export const useNextPrevPaginatedQuery = <
 
 	const mergedArgs = mergeArgs(state);
 
-	// NOTE: Is it possible to remove this any?
+	// NOTE: Is it possible to remove this `any`?
 	const queryResults = useQuery(query, mergedArgs as any);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies:
