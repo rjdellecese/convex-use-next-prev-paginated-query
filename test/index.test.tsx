@@ -73,22 +73,14 @@ describe("useNextPrevPaginatedQuery", () => {
 	it("should throw error for invalid initialNumItems", () => {
 		expect(() =>
 			renderHook(() =>
-				useNextPrevPaginatedQuery(
-					mockedQuery,
-					{ paginationOpts: { cursor: null, numItems: 3 } },
-					{ initialNumItems: 0 },
-				),
+				useNextPrevPaginatedQuery(mockedQuery, {}, { initialNumItems: 0 }),
 			),
 		).toThrow("Initial number of items must be greater than zero");
 	});
 
 	it("should start in loading state and transition to results", async () => {
 		const { result } = renderHook(() =>
-			useNextPrevPaginatedQuery(
-				mockedQuery,
-				{ paginationOpts: { cursor: null, numItems: 3 } },
-				{ initialNumItems: 3 },
-			),
+			useNextPrevPaginatedQuery(mockedQuery, {}, { initialNumItems: 3 }),
 		);
 
 		expect(result.current._tag).toBe("LoadingInitialResults");
@@ -108,11 +100,7 @@ describe("useNextPrevPaginatedQuery", () => {
 
 	it("should handle navigation correctly", async () => {
 		const { result } = renderHook(() =>
-			useNextPrevPaginatedQuery(
-				mockedQuery,
-				{ paginationOpts: { cursor: null, numItems: 3 } },
-				{ initialNumItems: 3 },
-			),
+			useNextPrevPaginatedQuery(mockedQuery, {}, { initialNumItems: 3 }),
 		);
 
 		expect(result.current._tag).toBe("LoadingInitialResults");
@@ -144,11 +132,7 @@ describe("useNextPrevPaginatedQuery", () => {
 
 	it("should handle reaching the end of pagination", async () => {
 		const { result } = renderHook(() =>
-			useNextPrevPaginatedQuery(
-				mockedQuery,
-				{ paginationOpts: { cursor: null, numItems: 8 } },
-				{ initialNumItems: 8 },
-			),
+			useNextPrevPaginatedQuery(mockedQuery, {}, { initialNumItems: 8 }),
 		);
 
 		await waitFor(() => {
