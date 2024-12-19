@@ -3,7 +3,9 @@
 		"lib": ["ESNext", "DOM"],
 		"target": "ESNext",
 		"moduleResolution": "Bundler",
-		"module": "ESNext"
+		"module": "ESNext",
+		"outDir": "dist"
 	},
-	"extends": "@tsconfig/strictest/tsconfig.json"
+	"extends": "@tsconfig/strictest/tsconfig.json",
+	"exclude": ["dist"]
 }
