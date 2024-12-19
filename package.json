@@ -12,7 +12,8 @@
     "test": "vitest",
     "format": "biome format . --write",
     "lint": "biome lint .",
-    "check": "biome check --write ."
+    "check": "biome check --write .",
+    "release": "pnpm build && changeset publish"
   },
   "keywords": [],
   "author": "RJ Dellecese",
