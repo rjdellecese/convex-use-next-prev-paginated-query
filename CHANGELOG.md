@@ -1,5 +1,11 @@
 # convex-use-next-prev-paginated-query
 
+## 1.0.1
+
+### Patch Changes
+
+- a378e97: Fix reactivity to changes in args
+
 ## 1.0.0
 
 ### Major Changes
