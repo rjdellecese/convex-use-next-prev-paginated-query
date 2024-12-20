@@ -3,10 +3,11 @@ import {
 	type PaginatedQueryReference,
 	useQuery,
 } from "convex/react";
-import type {
-	Cursor,
-	FunctionReturnType,
-	PaginationOptions,
+import {
+	type Cursor,
+	type FunctionReturnType,
+	type PaginationOptions,
+	getFunctionName,
 } from "convex/server";
 import { type Value, convexToJson } from "convex/values";
 import { type Dispatch, useEffect, useReducer } from "react";
@@ -31,9 +32,11 @@ export const useNextPrevPaginatedQuery = <
 	if (options.initialNumItems <= 0)
 		throw new Error("Initial number of items must be greater than zero");
 
+	const queryName = getFunctionName(query);
+
 	const [state, dispatch] = useReducer(
 		reducer,
-		{ args, options },
+		{ queryName, args, options },
 		initialState,
 	);
 
@@ -41,16 +44,18 @@ export const useNextPrevPaginatedQuery = <
 		if (
 			(state._tag !== "Skipped" &&
 				(JSON.stringify(state.args) !== JSON.stringify(args) ||
-					state.initialNumItems !== options.initialNumItems)) ||
+					state.initialNumItems !== options.initialNumItems ||
+					state.queryName !== queryName)) ||
 			(state._tag === "Skipped" && args !== "skip")
 		) {
 			dispatch({
 				_tag: "ArgsChanged",
+				queryName,
 				args,
 				options,
 			});
 		}
-	}, [args, options, state]);
+	}, [args, options, state, queryName]);
 
 	const mergedArgs = mergeArgs(state);
 
@@ -100,11 +105,13 @@ type State<Query extends PaginatedQueryReference> =
 	| { _tag: "Skipped" }
 	| {
 			_tag: "LoadingInitialResults";
+			queryName: string;
 			args: PaginatedQueryArgs<Query>;
 			initialNumItems: number;
 	  }
 	| {
 			_tag: "LoadingNextResults";
+			queryName: string;
 			args: PaginatedQueryArgs<Query>;
 			initialNumItems: number;
 			loadingCursor: Cursor | null;
@@ -112,6 +119,7 @@ type State<Query extends PaginatedQueryReference> =
 	  }
 	| {
 			_tag: "LoadingPrevResults";
+			queryName: string;
 			args: PaginatedQueryArgs<Query>;
 			initialNumItems: number;
 			loadingCursor: Cursor | null;
@@ -119,6 +127,7 @@ type State<Query extends PaginatedQueryReference> =
 	  }
 	| {
 			_tag: "Loaded";
+			queryName: string;
 			args: PaginatedQueryArgs<Query>;
 			initialNumItems: number;
 			currentResults: FunctionReturnType<Query>;
@@ -137,6 +146,7 @@ type Action<Query extends PaginatedQueryReference> =
 	| { _tag: "PrevPageRequested" }
 	| {
 			_tag: "ArgsChanged";
+			queryName: string;
 			args: PaginatedQueryArgs<Query> | "skip";
 			options: { initialNumItems: number };
 	  };
@@ -148,6 +158,7 @@ const reducer = <Query extends PaginatedQueryReference>(
 	switch (action._tag) {
 		case "ArgsChanged":
 			return initialState({
+				queryName: action.queryName,
 				args: action.args,
 				options: action.options,
 			});
@@ -159,6 +170,7 @@ const reducer = <Query extends PaginatedQueryReference>(
 
 				return {
 					_tag: "LoadingPrevResults",
+					queryName: state.queryName,
 					args: state.args,
 					initialNumItems: state.initialNumItems,
 					loadingCursor,
@@ -172,6 +184,7 @@ const reducer = <Query extends PaginatedQueryReference>(
 			if (state._tag === "Loaded") {
 				return {
 					_tag: "LoadingNextResults",
+					queryName: state.queryName,
 					args: state.args,
 					initialNumItems: state.initialNumItems,
 					loadingCursor: state.nextCursor,
@@ -189,6 +202,7 @@ const reducer = <Query extends PaginatedQueryReference>(
 			if (state._tag === "LoadingInitialResults") {
 				return {
 					_tag: "Loaded",
+					queryName: state.queryName,
 					args: state.args,
 					initialNumItems: state.initialNumItems,
 					currentResults: action.results,
@@ -199,6 +213,7 @@ const reducer = <Query extends PaginatedQueryReference>(
 			} else if (state._tag === "LoadingNextResults") {
 				return {
 					_tag: "Loaded",
+					queryName: state.queryName,
 					args: state.args,
 					initialNumItems: state.initialNumItems,
 					currentResults: action.results,
@@ -209,6 +224,7 @@ const reducer = <Query extends PaginatedQueryReference>(
 			} else if (state._tag === "LoadingPrevResults") {
 				return {
 					_tag: "Loaded",
+					queryName: state.queryName,
 					args: state.args,
 					initialNumItems: state.initialNumItems,
 					currentResults: action.results,
@@ -328,9 +344,11 @@ const makeLoadNext = <Query extends PaginatedQueryReference>(
 };
 
 const initialState = <Query extends PaginatedQueryReference>({
+	queryName,
 	args,
 	options,
 }: {
+	queryName: string;
 	args: PaginatedQueryArgs<Query> | "skip";
 	options: { initialNumItems: number };
 }): State<Query> =>
@@ -338,6 +356,7 @@ const initialState = <Query extends PaginatedQueryReference>({
 		? { _tag: "Skipped" }
 		: {
 				_tag: "LoadingInitialResults" as const,
+				queryName,
 				args,
 				initialNumItems: options.initialNumItems,
 			};

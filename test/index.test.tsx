@@ -19,6 +19,8 @@ type MockedQuery = FunctionReference<
 
 const mockedQuery = "mockedQuery" as unknown as MockedQuery;
 
+const mockedQueryDuplicate = "mockedQueryDuplicate" as unknown as MockedQuery;
+
 const mockedDocs = Array.from({ length: 10 }, (_, i) => ({
 	id: i,
 	value: `Item ${i}`,
@@ -32,6 +34,8 @@ const mockUseQuery = (
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies:
 	useEffect(() => {
+		setResult(undefined);
+
 		if (args === "skip") {
 			return;
 		}
@@ -61,7 +65,7 @@ const mockUseQuery = (
 		}, 0);
 
 		return () => clearTimeout(timeoutId);
-	}, [args === "skip" ? "skip" : JSON.stringify(args)]);
+	}, [args === "skip" ? "skip" : JSON.stringify(args), _query]);
 
 	return args === "skip" ? undefined : result;
 };
@@ -213,6 +217,37 @@ describe("useNextPrevPaginatedQuery", () => {
 
 		ifLoaded(result.current, (result) => {
 			expect(result.results).toEqual(mockedDocs.slice(0, 4));
+		});
+	});
+
+	it("should update the results when the query reference changes", async () => {
+		const { result, rerender } = renderHook<
+			Result<MockedQuery>,
+			{ query: MockedQuery }
+		>(
+			({ query }) =>
+				useNextPrevPaginatedQuery(query, {}, { initialNumItems: 3 }),
+			{
+				initialProps: { query: mockedQuery },
+			},
+		);
+
+		expect(result.current._tag).toBe("LoadingInitialResults");
+
+		await waitFor(() => {
+			expect(result.current._tag).toBe("Loaded");
+		});
+
+		rerender({ query: mockedQueryDuplicate });
+
+		expect(result.current._tag).toBe("LoadingInitialResults");
+
+		await waitFor(() => {
+			expect(result.current._tag).toBe("Loaded");
+		});
+
+		ifLoaded(result.current, (result) => {
+			expect(result.results).toEqual(mockedDocs.slice(0, 3));
 		});
 	});
 });
