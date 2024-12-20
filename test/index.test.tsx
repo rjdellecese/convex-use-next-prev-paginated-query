@@ -8,7 +8,7 @@ import type {
 import { useEffect, useState } from "react";
 import { vi } from "vitest";
 import { describe, expect, it } from "vitest";
-import { useNextPrevPaginatedQuery } from "../index";
+import { type Result, useNextPrevPaginatedQuery } from "../src/index";
 
 type MockedQuery = FunctionReference<
 	"query",
@@ -28,14 +28,14 @@ const mockUseQuery = (
 	_query: MockedQuery,
 	...[args]: OptionalRestArgsOrSkip<MockedQuery>
 ): MockedQuery["_returnType"] | undefined => {
-	if (args === "skip") {
-		return undefined;
-	}
-
 	const [result, setResult] = useState<MockedQuery["_returnType"]>();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies:
 	useEffect(() => {
+		if (args === "skip") {
+			return;
+		}
+
 		const timeoutId = setTimeout(() => {
 			const { cursor, numItems } = args.paginationOpts;
 
@@ -61,9 +61,9 @@ const mockUseQuery = (
 		}, 0);
 
 		return () => clearTimeout(timeoutId);
-	}, [JSON.stringify(args)]);
+	}, [args === "skip" ? "skip" : JSON.stringify(args)]);
 
-	return result;
+	return args === "skip" ? undefined : result;
 };
 
 vi.mock("convex/react");
@@ -89,13 +89,11 @@ describe("useNextPrevPaginatedQuery", () => {
 			expect(result.current._tag).toBe("Loaded");
 		});
 
-		if (result.current._tag === "Loaded") {
-			expect(result.current.results).toEqual(mockedDocs.slice(0, 3));
-			expect(result.current.loadNext).toBeTruthy();
-			expect(result.current.loadPrev).toBeNull();
-		} else {
-			expect.fail("Expected Loaded state");
-		}
+		ifLoaded(result.current, (result) => {
+			expect(result.results).toEqual(mockedDocs.slice(0, 3));
+			expect(result.loadNext).toBeTruthy();
+			expect(result.loadPrev).toBeNull();
+		});
 	});
 
 	it("should handle navigation correctly", async () => {
@@ -110,24 +108,20 @@ describe("useNextPrevPaginatedQuery", () => {
 		});
 
 		await act(async () => {
-			if (result.current._tag === "Loaded") {
-				result.current.loadNext?.();
-			} else {
-				expect.fail("Expected Loaded state");
-			}
+			ifLoaded(result.current, (result) => {
+				result.loadNext?.();
+			});
 		});
 
 		await waitFor(() => {
 			expect(result.current._tag).toBe("Loaded");
 		});
 
-		if (result.current._tag === "Loaded") {
-			expect(result.current.results).toEqual(mockedDocs.slice(3, 6));
-			expect(result.current.loadNext).toBeTruthy();
-			expect(result.current.loadPrev).toBeTruthy();
-		} else {
-			expect.fail("Expected Loaded state");
-		}
+		ifLoaded(result.current, (result) => {
+			expect(result.results).toEqual(mockedDocs.slice(3, 6));
+			expect(result.loadNext).toBeTruthy();
+			expect(result.loadPrev).toBeTruthy();
+		});
 	});
 
 	it("should handle reaching the end of pagination", async () => {
@@ -135,16 +129,16 @@ describe("useNextPrevPaginatedQuery", () => {
 			useNextPrevPaginatedQuery(mockedQuery, {}, { initialNumItems: 8 }),
 		);
 
+		expect(result.current._tag).toBe("LoadingInitialResults");
+
 		await waitFor(() => {
 			expect(result.current._tag).toBe("Loaded");
 		});
 
 		await act(async () => {
-			if (result.current._tag === "Loaded") {
-				result.current.loadNext?.();
-			} else {
-				expect.fail("Expected Loaded state");
-			}
+			ifLoaded(result.current, (result) => {
+				result.loadNext?.();
+			});
 		});
 
 		expect(result.current._tag).toBe("LoadingNextResults");
@@ -153,13 +147,11 @@ describe("useNextPrevPaginatedQuery", () => {
 			expect(result.current._tag).toBe("Loaded");
 		});
 
-		if (result.current._tag === "Loaded") {
-			expect(result.current.results).toEqual(mockedDocs.slice(8));
-			expect(result.current.loadNext).toBeNull();
-			expect(result.current.loadPrev).toBeTruthy();
-		} else {
-			expect.fail("Expected Loaded state");
-		}
+		ifLoaded(result.current, (result) => {
+			expect(result.results).toEqual(mockedDocs.slice(8));
+			expect(result.loadNext).toBeNull();
+			expect(result.loadPrev).toBeTruthy();
+		});
 	});
 
 	it("should handle skip argument", async () => {
@@ -169,4 +161,69 @@ describe("useNextPrevPaginatedQuery", () => {
 
 		expect(result.current._tag).toBe("Skipped");
 	});
+
+	it("should update the results when the query args change", async () => {
+		const { result, rerender } = renderHook<
+			Result<MockedQuery>,
+			{ args: "skip" | Record<string, never> }
+		>(
+			({ args }) =>
+				useNextPrevPaginatedQuery(mockedQuery, args, { initialNumItems: 3 }),
+			{ initialProps: { args: "skip" } },
+		);
+
+		expect(result.current._tag).toBe("Skipped");
+
+		rerender({ args: {} });
+
+		expect(result.current._tag).toBe("LoadingInitialResults");
+
+		await waitFor(() => {
+			expect(result.current._tag).toBe("Loaded");
+		});
+
+		ifLoaded(result.current, (result) => {
+			expect(result.results).toEqual(mockedDocs.slice(0, 3));
+			expect(result.loadNext).toBeTruthy();
+			expect(result.loadPrev).toBeNull();
+		});
+	});
+
+	it("should update the results when the options change", async () => {
+		const { result, rerender } = renderHook<
+			Result<MockedQuery>,
+			{ options: { initialNumItems: number } }
+		>(({ options }) => useNextPrevPaginatedQuery(mockedQuery, {}, options), {
+			initialProps: { options: { initialNumItems: 3 } },
+		});
+
+		expect(result.current._tag).toBe("LoadingInitialResults");
+
+		await waitFor(() => {
+			expect(result.current._tag).toBe("Loaded");
+		});
+
+		rerender({ options: { initialNumItems: 4 } });
+
+		expect(result.current._tag).toBe("LoadingInitialResults");
+
+		await waitFor(() => {
+			expect(result.current._tag).toBe("Loaded");
+		});
+
+		ifLoaded(result.current, (result) => {
+			expect(result.results).toEqual(mockedDocs.slice(0, 4));
+		});
+	});
 });
+
+const ifLoaded = (
+	result: Result<MockedQuery>,
+	f: (result: Extract<Result<MockedQuery>, { _tag: "Loaded" }>) => void,
+) => {
+	if (result._tag === "Loaded") {
+		f(result);
+	} else {
+		expect.fail("Expected Loaded state");
+	}
+};
