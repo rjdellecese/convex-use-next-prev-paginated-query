@@ -13,7 +13,7 @@ import type {
 import { useEffect, useState } from "react";
 import { afterEach, beforeEach, vi } from "vitest";
 import { describe, expect, it } from "vitest";
-import { type Result, useNextPrevPaginatedQuery } from "../src/index";
+import { type Result, useNextPrevPaginatedQuery } from "../index";
 
 type MockedQuery = FunctionReference<
 	"query",
