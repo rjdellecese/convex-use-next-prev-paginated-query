@@ -1,5 +1,11 @@
 # convex-use-next-prev-paginated-query
 
+## 1.0.2
+
+### Patch Changes
+
+- b949f6b: Fix build configuration issue
+
 ## 1.0.1
 
 ### Patch Changes
