@@ -1,0 +1,28 @@
+{
+  "name": "confect-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "concurrently --restart-tries=-1 --prefix-colors='white.bold.bgCyan,white.bold.bgYellow' --prefix=' {name} ' --names='VITE,CONVEX' 'vite' 'convex dev --tail-logs'",
+    "pnpm:devPreinstall": "[ -d node_modules ] && rm -r node_modules; cd .. && pnpm build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "convex-use-next-prev-paginated-query": "file:../",
+    "convex": "1.17.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "vite": "5.1.8"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.2",
+    "@types/react-dom": "19.0.2",
+    "@vitejs/plugin-react": "4.3.4",
+    "concurrently": "9.1.0",
+    "typescript": "5.7.2"
+  }
+}

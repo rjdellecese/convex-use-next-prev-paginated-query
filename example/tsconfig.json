@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"exactOptionalPropertyTypes": false,
+		"lib": ["ESNext", "DOM"],
+		"target": "ESNext",
+		"moduleResolution": "Bundler",
+		"module": "ESNext",
+		"baseUrl": ".",
+		"jsx": "react-jsx",
+	},
+	"exclude": ["node_modules", "convex/_generated"],
+	"extends": ["@tsconfig/strictest/tsconfig"]
+}

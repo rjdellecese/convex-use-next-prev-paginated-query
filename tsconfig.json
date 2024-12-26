@@ -3,9 +3,10 @@
 		"lib": ["ESNext", "DOM"],
 		"target": "ESNext",
 		"moduleResolution": "Bundler",
+		"jsx": "react-jsx",
 		"module": "ESNext",
 		"outDir": "dist"
 	},
 	"extends": "@tsconfig/strictest/tsconfig.json",
-	"exclude": ["dist"]
+	"exclude": ["dist", "example"]
 }
