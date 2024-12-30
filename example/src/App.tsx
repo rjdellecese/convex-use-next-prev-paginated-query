@@ -30,7 +30,7 @@ const Page = () => {
 	if (result._tag === "Loaded") {
 		return (
 			<ul>
-				{result.results.map((item) => (
+				{result.page.map((item) => (
 					<li key={item._id}>{item.content}</li>
 				))}
 			</ul>

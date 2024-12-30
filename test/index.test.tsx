@@ -106,7 +106,7 @@ describe("useNextPrevPaginatedQuery", () => {
 			});
 
 			ifLoaded(result.current, (result) => {
-				expect(result.results).toEqual(mockedDocs.slice(0, 3));
+				expect(result.page).toEqual(mockedDocs.slice(0, 3));
 				expect(result.loadNext).toBeTruthy();
 				expect(result.loadPrev).toBeNull();
 			});
@@ -134,7 +134,7 @@ describe("useNextPrevPaginatedQuery", () => {
 			});
 
 			ifLoaded(result.current, (result) => {
-				expect(result.results).toEqual(mockedDocs.slice(3, 6));
+				expect(result.page).toEqual(mockedDocs.slice(3, 6));
 				expect(result.loadNext).toBeTruthy();
 				expect(result.loadPrev).toBeTruthy();
 			});
@@ -164,7 +164,7 @@ describe("useNextPrevPaginatedQuery", () => {
 			});
 
 			ifLoaded(result.current, (result) => {
-				expect(result.results).toEqual(mockedDocs.slice(8));
+				expect(result.page).toEqual(mockedDocs.slice(8));
 				expect(result.loadNext).toBeNull();
 				expect(result.loadPrev).toBeTruthy();
 			});
@@ -199,7 +199,7 @@ describe("useNextPrevPaginatedQuery", () => {
 			});
 
 			ifLoaded(result.current, (result) => {
-				expect(result.results).toEqual(mockedDocs.slice(0, 3));
+				expect(result.page).toEqual(mockedDocs.slice(0, 3));
 				expect(result.loadNext).toBeTruthy();
 				expect(result.loadPrev).toBeNull();
 			});
@@ -228,7 +228,7 @@ describe("useNextPrevPaginatedQuery", () => {
 			});
 
 			ifLoaded(result.current, (result) => {
-				expect(result.results).toEqual(mockedDocs.slice(0, 4));
+				expect(result.page).toEqual(mockedDocs.slice(0, 4));
 			});
 		});
 
@@ -259,7 +259,7 @@ describe("useNextPrevPaginatedQuery", () => {
 			});
 
 			ifLoaded(result.current, (result) => {
-				expect(result.results).toEqual(mockedDocs.slice(0, 3));
+				expect(result.page).toEqual(mockedDocs.slice(0, 3));
 			});
 		});
 	});
@@ -280,7 +280,7 @@ describe("useNextPrevPaginatedQuery", () => {
 				if (result._tag === "Loaded") {
 					return (
 						<ul>
-							{result.results.map((item) => (
+							{result.page.map((item) => (
 								<li key={item.id}>{item.value}</li>
 							))}
 						</ul>

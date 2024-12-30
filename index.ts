@@ -89,7 +89,9 @@ export type Result<Query extends PaginatedQueryReference> =
 	  }
 	| {
 			_tag: "Loaded";
+			/** @deprecated Use `page` instead. This will be removed in the next major release. */
 			results: FunctionReturnType<Query>["page"];
+			page: FunctionReturnType<Query>["page"];
 			pageNum: number;
 			loadNext: (() => void) | null;
 			loadPrev: (() => void) | null;
@@ -301,6 +303,7 @@ const makeResult = <Query extends PaginatedQueryReference>(
 			return {
 				_tag: "Loaded",
 				results: state.currentResults.page,
+				page: state.currentResults.page,
 				pageNum: 1 + state.prevCursors.length + (state.currentCursor ? 1 : 0),
 				loadNext: makeLoadNext(state, dispatch),
 				loadPrev: makeLoadPrev(state, dispatch),
