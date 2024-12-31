@@ -1,5 +1,11 @@
 # convex-use-next-prev-paginated-query
 
+## 1.2.0
+
+### Minor Changes
+
+- 4d8e8dd: Support React 19
+
 ## 1.1.0
 
 ### Minor Changes
