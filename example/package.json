@@ -12,17 +12,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "convex": "1.17.4",
     "convex-use-next-prev-paginated-query": "file:../",
-    "convex": "1.17.3",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "vite": "5.1.8"
   },
   "devDependencies": {
     "@types/react": "19.0.2",
     "@types/react-dom": "19.0.2",
     "@vitejs/plugin-react": "4.3.4",
-    "concurrently": "9.1.0",
+    "concurrently": "9.1.1",
     "typescript": "5.7.2"
   }
 }
