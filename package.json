@@ -1,6 +1,6 @@
 {
   "name": "convex-use-next-prev-paginated-query",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Simple next/prev paginated query hook for Convex",
   "repository": "https://github.com/rjdellecese/convex-use-next-prev-paginated-query",
   "main": "dist/index.js",
