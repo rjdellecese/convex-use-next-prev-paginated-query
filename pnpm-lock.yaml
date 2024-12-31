@@ -9,52 +9,52 @@ importers:
   .:
     devDependencies:
       '@arethetypeswrong/cli':
-        specifier: ^0.17.1
+        specifier: 0.17.2
         version: 0.17.2
       '@biomejs/biome':
-        specifier: ^1.9.4
+        specifier: 1.9.4
         version: 1.9.4
       '@changesets/cli':
-        specifier: ^2.27.11
+        specifier: 2.27.11
         version: 2.27.11
       '@changesets/config':
-        specifier: ^3.0.5
+        specifier: 3.0.5
         version: 3.0.5
       '@testing-library/jest-dom':
-        specifier: ^6.6.3
+        specifier: 6.6.3
         version: 6.6.3
       '@testing-library/react':
-        specifier: ^16.1.0
+        specifier: 16.1.0
         version: 16.1.0(@testing-library/dom@10.4.0)(@types/react@19.0.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tsconfig/strictest':
-        specifier: ^2.0.5
+        specifier: 2.0.5
         version: 2.0.5
       '@types/react':
-        specifier: ^19.0.2
+        specifier: 19.0.2
         version: 19.0.2
       convex:
-        specifier: ^1.17.4
+        specifier: 1.17.4
         version: 1.17.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       convex-helpers:
-        specifier: ^0.1.67
+        specifier: 0.1.67
         version: 0.1.67(convex@1.17.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       jsdom:
-        specifier: ^25.0.1
+        specifier: 25.0.1
         version: 25.0.1
       react:
-        specifier: ^19.0.0
+        specifier: ^18.0.0 || ^19.0.0
         version: 19.0.0
       react-dom:
-        specifier: ^19.0.0
+        specifier: ^18.0.0 || ^19.0.0
         version: 19.0.0(react@19.0.0)
       tsup:
-        specifier: ^8.3.5
+        specifier: 8.3.5
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)
       typescript:
-        specifier: ^5.7.2
+        specifier: 5.7.2
         version: 5.7.2
       vitest:
-        specifier: ^2.1.8
+        specifier: 2.1.8
         version: 2.1.8(jsdom@25.0.1)
 
 packages:
