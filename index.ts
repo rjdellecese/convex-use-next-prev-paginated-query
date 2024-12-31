@@ -82,6 +82,13 @@ export const useNextPrevPaginatedQuery = <
 	return result;
 };
 
+/**
+ * The result of a paginated query, modeled as a discriminated union.
+ *
+ * You should use `if` or `switch` statements to conditionally render
+ * based on the `_tag` property, which indicates the current state of the
+ * paginated query.
+ */
 export type Result<Query extends PaginatedQueryReference> =
 	| { _tag: "Skipped" }
 	| {
@@ -89,9 +96,15 @@ export type Result<Query extends PaginatedQueryReference> =
 	  }
 	| {
 			_tag: "Loaded";
+			/** @deprecated Use `page` instead. This will be removed in the next major release. */
 			results: FunctionReturnType<Query>["page"];
+			/** The current page of results. */
+			page: FunctionReturnType<Query>["page"];
+			/** The number of the current page (1-indexed). */
 			pageNum: number;
+			/** A function which loads the next page of results, or null if this is the last page. */
 			loadNext: (() => void) | null;
+			/** A function which loads the previous page of results, or null if this is the first page. */
 			loadPrev: (() => void) | null;
 	  }
 	| {
@@ -301,6 +314,7 @@ const makeResult = <Query extends PaginatedQueryReference>(
 			return {
 				_tag: "Loaded",
 				results: state.currentResults.page,
+				page: state.currentResults.page,
 				pageNum: 1 + state.prevCursors.length + (state.currentCursor ? 1 : 0),
 				loadNext: makeLoadNext(state, dispatch),
 				loadPrev: makeLoadPrev(state, dispatch),
