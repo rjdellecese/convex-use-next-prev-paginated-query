@@ -24,7 +24,7 @@
   "author": "RJ Dellecese",
   "license": "ISC",
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.17.2",
+    "@arethetypeswrong/cli": "0.17.3",
     "@biomejs/biome": "1.9.4",
     "@changesets/cli": "2.27.11",
     "@changesets/config": "3.0.5",
