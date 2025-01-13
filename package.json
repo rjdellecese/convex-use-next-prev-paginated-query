@@ -31,7 +31,7 @@
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.1.0",
     "@tsconfig/strictest": "2.0.5",
-    "@types/react": "19.0.2",
+    "@types/react": "19.0.6",
     "convex": "1.17.4",
     "convex-helpers": "0.1.67",
     "jsdom": "25.0.1",
