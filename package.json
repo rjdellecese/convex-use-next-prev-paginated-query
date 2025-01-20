@@ -29,7 +29,7 @@
     "@changesets/cli": "2.27.11",
     "@changesets/config": "3.0.5",
     "@testing-library/jest-dom": "6.6.3",
-    "@testing-library/react": "16.1.0",
+    "@testing-library/react": "16.2.0",
     "@tsconfig/strictest": "2.0.5",
     "@types/react": "19.0.6",
     "convex": "1.17.4",
