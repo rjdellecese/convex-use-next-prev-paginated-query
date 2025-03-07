@@ -51,29 +51,30 @@ const MyComponent = () => {
     { initialNumItems: 10 }
   );
 
-  if (result._tag === "Skipped") {
-    return <div>Skipped</div>;
-  } else if (result._tag === "LoadingInitialResults") {
-    return <div>LoadingInitialResults</div>;
-  } else if (result._tag === "Loaded") {
-    return (
-      <div>
+  switch (result._tag) {
+    case "Skipped":
+      return <div>Skipped</div>;
+    case "LoadingInitialResults":
+      return <div>LoadingInitialResults</div>;
+    case "Loaded":
+      return (
         <div>
-          {result.page.map((message) => (
-            <div key={message._id}>{message.text}</div>
-          ))}
+          <div>
+            {result.page.map((message) => (
+              <div key={message._id}>{message.text}</div>
+            ))}
+          </div>
+          {result.loadNext && <button onClick={result.loadNext}>Next</button>}
+          Page {result.pageNum}
+          {result.loadPrev && <button onClick={result.loadPrev}>Prev</button>}
         </div>
-        {result.loadNext && <button onClick={result.loadNext}>Next</button>}
-        Page {result.pageNum}
-        {result.loadPrev && <button onClick={result.loadPrev}>Prev</button>}
-      </div>
-    );
-  } else if (result._tag === "LoadingNextResults") {
-    return <div>LoadingNextResults</div>;
-  } else if (result._tag === "LoadingPrevResults") {
-    return <div>LoadingPrevResults</div>;
-  } else {
-    throw "Unknown state";
+      );
+    case "LoadingNextResults":
+      return <div>LoadingNextResults</div>;
+    case "LoadingPrevResults":
+      return <div>LoadingPrevResults</div>;
+    default:
+      throw "Unknown state";
   }
 };
 ```
