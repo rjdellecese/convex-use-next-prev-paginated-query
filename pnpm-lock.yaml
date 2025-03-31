@@ -36,8 +36,8 @@ importers:
         specifier: 1.19.5
         version: 1.19.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       convex-helpers:
-        specifier: 0.1.71
-        version: 0.1.71(convex@1.19.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
+        specifier: 0.1.76
+        version: 0.1.76(convex@1.19.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       jsdom:
         specifier: 26.0.0
         version: 26.0.0
@@ -87,6 +87,10 @@ packages:
 
   '@babel/runtime@7.26.0':
     resolution: {integrity: sha512-FDSOghenHTiToteC/QRlv2q3DhPZ/oOXTBoirfWNx1Cx3TMVcGWQtMMmQcSvb/JjpNeGzx8Pq/b4fKEJuWm1sw==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/runtime@7.27.0':
+    resolution: {integrity: sha512-VtPOkrdPHZsKc/clNqyi9WUA8TINkZ4cGk63UUE3u4pmB2k+ZMQRDuIOagv8UVd6j7k0T3+RRIb7beKTebNbcw==}
     engines: {node: '>=6.9.0'}
 
   '@biomejs/biome@1.9.4':
@@ -886,8 +890,8 @@ packages:
     resolution: {integrity: sha512-EiPU8G6dQG0GFHNR8ljnZFki/8a+cQwEQ+7wpxdChl02Q8HXlwEZWD5lqAF8vC2sEC3Tehr8hy7vErz88LHyUA==}
     engines: {node: ^14.18.0 || >=16.10.0}
 
-  convex-helpers@0.1.71:
-    resolution: {integrity: sha512-/uucsexesq9CNl1J+wZIdjcvPWd9nXcZKE8sIGokduhmtPI+6GtXz/dkpNm9pgFXx6yPJ51lFMuuZFAkVicI0A==}
+  convex-helpers@0.1.76:
+    resolution: {integrity: sha512-JGMAlC4DRRcibhdsdIm6FQ4kTEwAAMmYqu7aIFjcpxoxcCP1VEZ49YenYBYZUWpTa5BTxnRcd/TRmynsnhkktw==}
     hasBin: true
     peerDependencies:
       convex: ^1.13.0
@@ -1883,6 +1887,10 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
+  '@babel/runtime@7.27.0':
+    dependencies:
+      regenerator-runtime: 0.14.1
+
   '@biomejs/biome@1.9.4':
     optionalDependencies:
       '@biomejs/cli-darwin-arm64': 1.9.4
@@ -2352,7 +2360,7 @@ snapshots:
   '@testing-library/dom@10.4.0':
     dependencies:
       '@babel/code-frame': 7.26.2
-      '@babel/runtime': 7.26.0
+      '@babel/runtime': 7.27.0
       '@types/aria-query': 5.0.4
       aria-query: 5.3.0
       chalk: 4.1.2
@@ -2565,7 +2573,7 @@ snapshots:
 
   consola@3.4.0: {}
 
-  convex-helpers@0.1.71(convex@1.19.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0):
+  convex-helpers@0.1.76(convex@1.19.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0):
     dependencies:
       convex: 1.19.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
     optionalDependencies:
