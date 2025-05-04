@@ -14,7 +14,7 @@
   },
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
+  "postCreateCommand": "pnpm_version=$(node -p 'require(`./package.json`).engines.pnpm') && npm install -g pnpm@$pnpm_version && pnpm install",
 
 	// Configure tool-specific properties.
 	"customizations": {
