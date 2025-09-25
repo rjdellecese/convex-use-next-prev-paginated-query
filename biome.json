@@ -1,8 +1,6 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"organizeImports": {
-		"enabled": true
-	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
@@ -26,18 +24,19 @@
 		}
 	},
 	"files": {
-		"ignore": [
-			".pnpm-store",
-			".tsup",
-			"coverage",
-			"docs",
-			"dist",
-			"package.json",
-			"pnpm-lock.yaml",
-			"test/convex/_generated",
-			"example/convex/_generated",
-			"example/pnpm-lock.yaml",
-			"example/node_modules"
+		"includes": [
+			"**",
+			"!**/.pnpm-store",
+			"!**/.tsup",
+			"!**/coverage",
+			"!**/docs",
+			"!**/dist",
+			"!**/package.json",
+			"!**/pnpm-lock.yaml",
+			"!**/test/convex/_generated",
+			"!**/example/convex/_generated",
+			"!**/example/pnpm-lock.yaml",
+			"!**/example/node_modules"
 		]
 	}
 }
