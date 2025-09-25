@@ -11,8 +11,7 @@ import type {
 	PaginationResult,
 } from "convex/server";
 import { useEffect, useState } from "react";
-import { afterEach, beforeEach, vi } from "vitest";
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { type Result, useNextPrevPaginatedQuery } from "../index";
 
 type MockedQuery = FunctionReference<
@@ -37,7 +36,7 @@ const mockUseQuery = (
 ): MockedQuery["_returnType"] | undefined => {
 	const [result, setResult] = useState<MockedQuery["_returnType"]>();
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies:
+	// biome-ignore lint/correctness/useExhaustiveDependencies: trust
 	useEffect(() => {
 		setResult(undefined);
 
@@ -52,7 +51,7 @@ const mockUseQuery = (
 				cursor === null
 					? mockedDocs.slice(0, numItems)
 					: mockedDocs
-							.filter((doc) => doc.id > Number.parseInt(cursor))
+							.filter((doc) => doc.id > Number.parseInt(cursor, 10))
 							.slice(0, numItems);
 
 			const lastId = page[page.length - 1]?.id;

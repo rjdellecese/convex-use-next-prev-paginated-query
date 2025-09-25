@@ -6,10 +6,10 @@ import {
 import {
 	type Cursor,
 	type FunctionReturnType,
-	type PaginationOptions,
 	getFunctionName,
+	type PaginationOptions,
 } from "convex/server";
-import { type Value, convexToJson } from "convex/values";
+import { convexToJson, type Value } from "convex/values";
 import { type Dispatch, useEffect, useReducer } from "react";
 
 /**
@@ -62,7 +62,7 @@ export const useNextPrevPaginatedQuery = <
 	// NOTE: Is it possible to remove this `any`?
 	const queryResults = useQuery(query, mergedArgs as any);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies:
+	// biome-ignore lint/correctness/useExhaustiveDependencies: trust
 	useEffect(() => {
 		if (queryResults) {
 			dispatch({

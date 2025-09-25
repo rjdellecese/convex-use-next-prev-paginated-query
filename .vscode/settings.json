@@ -3,10 +3,10 @@
 	"editor.formatOnSave": true,
 	"editor.codeActionsOnSave": {
 		"source.organizeImports.biome": "always",
-		"quickfix.biome": "always"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome"
+		"source.fixAll.biome": "explicit"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[typescript]": {
 		"editor.defaultFormatter": "biomejs.biome"
