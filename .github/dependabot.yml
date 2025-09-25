@@ -9,9 +9,9 @@ updates:
  - package-ecosystem: "devcontainers"
    directory: "/"
    schedule:
-     interval: weekly
+     interval: quarterly
 
  - package-ecosystem: "npm"
    directory: "/"
    schedule:
-     interval: weekly
+     interval: quarterly
